@@ -1,4 +1,5 @@
 using System;
+using Zoo.Models.DbModels;
 using Zoo.Models.Enums;
 
 namespace Zoo.Models.ApiModels
@@ -13,5 +14,21 @@ namespace Zoo.Models.ApiModels
         public Classification Classification { get; set; }
         public Sex Sex { get; set; }
         public string Species { get; set; }
+
+        public AnimalApiModel(AnimalDbModel animal)
+        {
+            Id = animal.Id;
+            Name = animal.Name;
+            Age = animal.Age;
+            DateOfBirth = animal.DateOfBirth;
+            DateOfArrival = animal.DateOfArrival;
+            Classification = animal.Classification;
+            Sex = animal.Sex;
+            Species = animal.Species;
+        }
+
+        public AnimalApiModel()
+        {
+        }
     }
 }

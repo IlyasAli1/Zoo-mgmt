@@ -24,10 +24,16 @@ namespace Zoo.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public IEnumerable<AnimalApiModel> Get(int id)
+        public AnimalApiModel Get(int id)
         {
-            // call animal service
+            return _animals.GetAnimalById(id);
+        }
 
+        [HttpPost]
+        [Route("create")]
+        public void Add([FromBody] AnimalRequestModel api)
+        {
+            _animals.AddAnimalToDb(api);
         }
     }
 }

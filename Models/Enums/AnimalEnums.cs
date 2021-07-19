@@ -7,7 +7,7 @@ namespace Zoo.Models.Enums
 {
         public enum Classification
         {
-            Mammal,
+            Mammal = 1,
             Reptile,
             Bird,
             Insect,
