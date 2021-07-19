@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using Zoo.Models.Enums;
 
-namespace Zoo.Models.DbModels
+namespace Zoo.Models.ApiModels
 {
-    public class AnimalDbModel
+    public class AnimalApiModel
     {
         public int Id { get; set; }
         public string Name { get; set; }

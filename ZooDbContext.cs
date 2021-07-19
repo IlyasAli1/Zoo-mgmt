@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Zoo.DbModels;
+using Zoo.Models.DbModels;
 
 namespace Zoo
 {

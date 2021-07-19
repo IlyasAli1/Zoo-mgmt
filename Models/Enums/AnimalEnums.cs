@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Zoo.Models.DbModels
+namespace Zoo.Models.Enums
 {
-    
-    public class AnimalDbEnums
-    {
         public enum Classification
         {
             Mammal,
@@ -16,12 +13,11 @@ namespace Zoo.Models.DbModels
             Insect,
             Fish,
             Invertebrate
-
         }
+
         public enum Sex
         { 
             Male,
             Female
         }
-    }
 }
