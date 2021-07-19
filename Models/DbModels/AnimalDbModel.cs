@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Zoo.DbModels
+namespace Zoo.Models.DbModels
 {
     public class AnimalDbModel
     {

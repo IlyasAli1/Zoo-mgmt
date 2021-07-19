@@ -31,10 +31,10 @@ namespace Zoo
         private static string CORS_POLICY_NAME = "_myfaceCorsPolicy";
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<MyFaceDbContext>(options =>
+            services.AddDbContext<ZooDbContext>(options =>
             {
                 options.UseLoggerFactory(LoggerFactory);
-                options.UseSqlite("Data Source=myface.db");
+                options.UseSqlite("Data Source=zoo.db");
             });
 
             services.AddCors(options =>
