@@ -8,7 +8,10 @@ namespace Zoo.Services
     public interface IAnimalService
     {
         AnimalResponseModel GetAnimalById(int id);
-        void AddAnimalToDb(AnimalRequestModel animal, SpeciesDbModel species);
+        void AddAnimalToDb(AnimalRequestModel animal);
+        SpeciesResponseModel GetSpeciesById(int id);
+        void AddSpeciesToDb(SpeciesRequestModel animal);
+        SpeciesDbModel GetDbModelSpeciesById(int id);
     }
 
     public class AnimalService : IAnimalService
@@ -29,7 +32,7 @@ namespace Zoo.Services
             );
         }
 
-        public void AddAnimalToDb(AnimalRequestModel animal, SpeciesDbModel species)
+        public void AddAnimalToDb(AnimalRequestModel animal)
         {
             _context.Animal.Add(new AnimalDbModel
             {
@@ -38,7 +41,31 @@ namespace Zoo.Services
                 DateOfBirth = animal.DateOfBirth,
                 DateOfArrival = animal.DateOfArrival,
                 Sex = animal.Sex,
-                Species = species
+                Species = GetDbModelSpeciesById(animal.SpeciesId)
+            });
+
+            _context.SaveChanges();
+        }
+
+        public SpeciesResponseModel GetSpeciesById(int id)
+        {
+            return new SpeciesResponseModel(GetDbModelSpeciesById(id));
+            
+        }
+
+        public SpeciesDbModel GetDbModelSpeciesById(int id)
+        {
+            return _context.Species
+            .Single(species => species.Id == id);
+        }
+
+        public void AddSpeciesToDb(SpeciesRequestModel species)
+        {
+            _context.Species.Add(new SpeciesDbModel
+            {
+                Type = species.Type,
+                Classification = species.Classification
+
             });
 
             _context.SaveChanges();

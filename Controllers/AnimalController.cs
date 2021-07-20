@@ -11,13 +11,11 @@ namespace Zoo.Controllers
     {
         private readonly ILogger<AnimalController> _logger;
         private readonly IAnimalService _animals;
-        private readonly ISpeciesService _species;
 
-        public AnimalController(ILogger<AnimalController> logger, IAnimalService animals, ISpeciesService species)
+        public AnimalController(ILogger<AnimalController> logger, IAnimalService animals)
         {
             _logger = logger;
             _animals = animals;
-            _species = species;
         }
 
         [HttpGet]
@@ -30,9 +28,8 @@ namespace Zoo.Controllers
         [HttpPost]
         [Route("create")]
         public void Add([FromBody] AnimalRequestModel animal)
-        {
-            var species =  _species.GetDbModelSpeciesById(animal.SpeciesId);
-            _animals.AddAnimalToDb(animal, species);
+        { 
+            _animals.AddAnimalToDb(animal);
         }
     }
 }
