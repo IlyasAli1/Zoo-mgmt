@@ -1,4 +1,3 @@
-using System;
 using Zoo.Models.DbModels;
 using Zoo.Models.Enums;
 

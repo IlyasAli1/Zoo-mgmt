@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Linq;
+using Zoo.Data;
 
 namespace Zoo
 {
@@ -22,14 +24,21 @@ namespace Zoo
 
             ZooDbContext context = services.GetRequiredService<ZooDbContext>();
             context.Database.EnsureCreated();
+
+            if (!context.Species.Any())
+            {
+                System.Collections.Generic.IEnumerable<Models.DbModels.SpeciesDbModel> species = SampleSpecies.GetSpecies();
+                context.Species.AddRange(species);
+                context.SaveChanges();
+            }
         }
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
             return Host.CreateDefaultBuilder(args)
-.ConfigureWebHostDefaults(webBuilder =>
-{
-    webBuilder.UseStartup<Startup>();
-});
+                    .ConfigureWebHostDefaults(webBuilder =>
+        {
+            webBuilder.UseStartup<Startup>();
+        });
         }
     }
 }

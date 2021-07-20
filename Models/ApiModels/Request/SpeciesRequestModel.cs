@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using Zoo.Models.Enums;
 
 namespace Zoo.Models.ApiModels

@@ -28,7 +28,7 @@ namespace Zoo.Controllers
         [HttpPost]
         [Route("create")]
         public void Add([FromBody] AnimalRequestModel animal)
-        { 
+        {
             _animals.AddAnimalToDb(animal);
         }
     }

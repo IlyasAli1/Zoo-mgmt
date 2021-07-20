@@ -50,7 +50,7 @@ namespace Zoo.Services
         public SpeciesResponseModel GetSpeciesById(int id)
         {
             return new SpeciesResponseModel(GetDbModelSpeciesById(id));
-            
+
         }
 
         public SpeciesDbModel GetDbModelSpeciesById(int id)
