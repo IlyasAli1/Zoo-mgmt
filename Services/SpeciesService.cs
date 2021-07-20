@@ -9,6 +9,7 @@ namespace Zoo.Services
     {
         SpeciesResponseModel GetSpeciesById(int id);
         void AddSpeciesToDb(SpeciesRequestModel animal);
+        SpeciesDbModel GetDbModelSpeciesById(int id);
     }
 
     public class SpeciesService : ISpeciesService
@@ -28,13 +29,19 @@ namespace Zoo.Services
             );
         }
 
+        public SpeciesDbModel GetDbModelSpeciesById(int id)
+        {
+            return _context.Species
+            .Single(species => species.Id == id);
+        }
+
         public void AddSpeciesToDb(SpeciesRequestModel species)
         {
             _context.Species.Add(new SpeciesDbModel
             {
                 Type = species.Type,
                 Classification = species.Classification
-                
+
             });
 
             _context.SaveChanges();
