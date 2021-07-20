@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using Zoo.Models.ApiModels;
 using Zoo.Services;
 
@@ -30,6 +31,13 @@ namespace Zoo.Controllers
         public void Add([FromBody] AnimalRequestModel animal)
         {
             _animals.AddAnimalToDb(animal);
+        }
+
+        [HttpPost]
+        [Route("search")]
+        public List<AnimalResponseModel> Search([FromQuery] SearchRequestModel search)
+        {
+            return _animals.Search(search);
         }
     }
 }

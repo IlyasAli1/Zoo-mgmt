@@ -9,5 +9,5 @@ namespace Zoo.Models.ApiModels
         public string Type;
         [Required]
         public Classification Classification;
-    }
+    } 
 }

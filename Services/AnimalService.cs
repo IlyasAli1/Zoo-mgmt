@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Zoo.Models.ApiModels;
 using Zoo.Models.DbModels;
@@ -12,6 +14,7 @@ namespace Zoo.Services
         SpeciesResponseModel GetSpeciesById(int id);
         void AddSpeciesToDb(SpeciesRequestModel animal);
         SpeciesDbModel GetDbModelSpeciesById(int id);
+        List<AnimalResponseModel> Search(SearchRequestModel search);
     }
 
     public class AnimalService : IAnimalService
@@ -68,6 +71,22 @@ namespace Zoo.Services
             });
 
             _context.SaveChanges();
+        }
+
+        public List<AnimalResponseModel> Search(SearchRequestModel search)
+        {
+            return _context.Animal
+                .Include(a => a.Species)
+                .OrderBy(a => a.Species.Type)
+                .Where(a => search.Classification == 0 || a.Species.Classification == search.Classification)
+                .Where(a => search.Type == "all" || a.Species.Type == search.Type)
+                .Where(a => search.Age == 0 || new DateTime(DateTime.Now.Subtract(a.DateOfBirth).Ticks).Year - 1 == search.Age)
+                .Where(a => search.Name == null || a.Name == search.Name)
+                .Where(a => search.DateAcquired == default(DateTime) || a.DateOfArrival == search.DateAcquired)
+                .Skip((search.Page - 1) * search.PageSize)
+                .Take(search.PageSize)
+                .Select(a => new AnimalResponseModel(a))
+                .ToList();
         }
     }
 }
