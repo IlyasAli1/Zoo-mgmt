@@ -14,9 +14,9 @@ namespace Zoo.Data
             new List<string> { "Alpha", "09/12/04" , "01/04/08" , "0" , "Wolf" },
             new List<string> { "Samantha", "22/12/09" , "01/04/14" , "1" ,"Snake" },
             new List<string> { "Doris", "30/12/15" , "01/09/20" , "1" , "Crocodile" },
-            new List<string> { "Kim", "10/11/10" , "04/10/13" , "1" ,"Cheetah" },
-            new List<string> { "Kai", "09/12/20" , "01/04/21" , "0" ,"Rabbit" },
-            new List<string> { "Don", "09/12/10" , "24/11/18" , "0" ,"Turtle" },
+            new List<string> { "Kim", "10/11/10" , "04/10/13" , "1" , "Cheetah" },
+            new List<string> { "Kai", "09/12/20" , "01/04/21" , "0" , "Rabbit" },
+            new List<string> { "Don", "09/12/10" , "24/11/18" , "0" , "Turtle" },
             new List<string> { "Harold", "03/11/2010", "11/04/2016", "0", "Chameleon"},
             new List<string> { "Betty", "13/01/2002", "11/04/2017", "1", "Bullfinch"},
             new List<string> { "Pingu", "03/11/2012", "11/04/2018", "0", "Penguin"},
@@ -30,7 +30,6 @@ namespace Zoo.Data
             new List<string> { "Wanda", "06/05/2017", "25/06/2017", "0", "Starfish" },
             new List<string> { "Bait", "06/05/2017", "25/06/2017", "1", "Scallop" },
             new List<string> { "Cthulhu", "06/05/2017", "25/06/2017", "0", "Jellyfish" }
-
         };
 
         public IEnumerable<AnimalDbModel> GetAnimals()
@@ -42,7 +41,6 @@ namespace Zoo.Data
         private AnimalDbModel CreateRandomAnimal(int index, List<SpeciesDbModel> species) => new AnimalDbModel
         {
             Name = _data[index][0],
-            Age = int.Parse(_data[index][1]),
             DateOfBirth = DateTime.Parse(_data[index][2]),
             DateOfArrival = DateTime.Parse(_data[index][3]),
             Sex = (Sex)int.Parse(_data[index][4]),
