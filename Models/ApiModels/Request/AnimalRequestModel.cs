@@ -9,8 +9,6 @@ namespace Zoo.Models.ApiModels
         [Required]
         public string Name { get; set; }
         [Required]
-        public int Age { get; set; }
-        [Required]
         public DateTime DateOfBirth { get; set; }
         [Required]
         public DateTime DateOfArrival { get; set; }

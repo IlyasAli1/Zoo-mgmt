@@ -32,19 +32,19 @@ namespace Zoo.Data
             new List<string> { "Cthulhu", "06/05/2017", "25/06/2017", "0", "Jellyfish" }
         };
 
-        public IEnumerable<AnimalDbModel> GetAnimals()
+        public static IEnumerable<AnimalDbModel> GetAnimals()
         {
             var species = SampleSpecies.GetSpecies().ToList();
             return Enumerable.Range(0, _data.Count()).Select(i => CreateRandomAnimal(i, species));
         }
 
-        private AnimalDbModel CreateRandomAnimal(int index, List<SpeciesDbModel> species) => new AnimalDbModel
+        private static AnimalDbModel CreateRandomAnimal(int index, List<SpeciesDbModel> species) => new AnimalDbModel
         {
             Name = _data[index][0],
-            DateOfBirth = DateTime.Parse(_data[index][2]),
-            DateOfArrival = DateTime.Parse(_data[index][3]),
-            Sex = (Sex)int.Parse(_data[index][4]),
-            Species = species.Single(s => s.Type == _data[index][5])
+            DateOfBirth = DateTime.Parse(_data[index][1]),
+            DateOfArrival = DateTime.Parse(_data[index][2]),
+            Sex = (Sex)int.Parse(_data[index][3]),
+            Species = species.Single(s => s.Type == _data[index][4])
         };
     }
 }

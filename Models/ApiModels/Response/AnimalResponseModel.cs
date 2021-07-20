@@ -19,7 +19,7 @@ namespace Zoo.Models.ApiModels
         {
             Id = animal.Id;
             Name = animal.Name;
-            Age = animal.Age;
+            Age = new DateTime(DateTime.Now.Subtract(animal.DateOfBirth).Ticks).Year - 1;
             DateOfBirth = animal.DateOfBirth;
             DateOfArrival = animal.DateOfArrival;
             Classification = animal.Species.Classification;

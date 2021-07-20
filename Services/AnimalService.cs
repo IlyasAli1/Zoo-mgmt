@@ -37,7 +37,6 @@ namespace Zoo.Services
             _context.Animal.Add(new AnimalDbModel
             {
                 Name = animal.Name,
-                Age = animal.Age,
                 DateOfBirth = animal.DateOfBirth,
                 DateOfArrival = animal.DateOfArrival,
                 Sex = animal.Sex,

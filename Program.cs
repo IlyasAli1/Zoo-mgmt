@@ -28,7 +28,7 @@ namespace Zoo
 
             if (!context.Animal.Any())
             {
-                var animals = sampleAnimal.GetAnimals();
+                var animals = SampleAnimal.GetAnimals();
                 context.Animal.AddRange(animals);
                 context.SaveChanges();
             }
