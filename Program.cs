@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Linq;
 using Zoo.Data;
+using Zoo.Services;
 
 namespace Zoo
 {
@@ -25,10 +26,10 @@ namespace Zoo
             ZooDbContext context = services.GetRequiredService<ZooDbContext>();
             context.Database.EnsureCreated();
 
-            if (!context.Species.Any())
+            if (!context.Animal.Any())
             {
-                System.Collections.Generic.IEnumerable<Models.DbModels.SpeciesDbModel> species = SampleSpecies.GetSpecies();
-                context.Species.AddRange(species);
+                var animals = sampleAnimal.GetAnimals();
+                context.Animal.AddRange(animals);
                 context.SaveChanges();
             }
         }
