@@ -10,9 +10,9 @@ namespace Zoo.Models.ApiModels
         public int PageSize { get; set; } = 10;
         public Classification Classification => 0;
         public string Type => "all";
-        public int Age;
-        public string Name;
-        public DateTime DateAcquired;
+        public int Age => 0;
+        public string Name => null;
+        public DateTime DateAcquired => default(DateTime);
         public bool Ascending => true;
    }
 }
