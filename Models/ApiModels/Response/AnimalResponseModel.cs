@@ -4,7 +4,7 @@ using Zoo.Models.Enums;
 
 namespace Zoo.Models.ApiModels
 {
-    public class AnimalApiModel
+    public class AnimalResponseModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -15,19 +15,19 @@ namespace Zoo.Models.ApiModels
         public Sex Sex { get; set; }
         public string Species { get; set; }
 
-        public AnimalApiModel(AnimalDbModel animal)
+        public AnimalResponseModel(AnimalDbModel animal)
         {
             Id = animal.Id;
             Name = animal.Name;
             Age = animal.Age;
             DateOfBirth = animal.DateOfBirth;
             DateOfArrival = animal.DateOfArrival;
-            Classification = animal.Classification;
+            Classification = animal.Species.Classification;
             Sex = animal.Sex;
-            Species = animal.Species;
+            Species = animal.Species.Type;
         }
 
-        public AnimalApiModel()
+        public AnimalResponseModel()
         {
         }
     }

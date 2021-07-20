@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Zoo.Services;
 using Zoo.Models.ApiModels;
+using Zoo.Services;
 
 namespace Zoo.Controllers
 {
@@ -15,11 +11,13 @@ namespace Zoo.Controllers
     {
         private readonly ILogger<AnimalController> _logger;
         private readonly IAnimalService _animals;
+        private readonly ISpeciesService _species;
 
-        public AnimalController(ILogger<AnimalController> logger, IAnimalService animals)
+        public AnimalController(ILogger<AnimalController> logger, IAnimalService animals, ISpeciesService _species)
         {
             _logger = logger;
             _animals = animals;
+            _species = species;
         }
 
         [HttpGet]
@@ -31,9 +29,10 @@ namespace Zoo.Controllers
 
         [HttpPost]
         [Route("create")]
-        public void Add([FromBody] AnimalRequestModel api)
+        public void Add([FromBody] AnimalRequestModel animal)
         {
-            _animals.AddAnimalToDb(api);
+            var species =  _species.GetSpeciesById(animal.SpeciesId);
+            _animals.AddAnimalToDb(animal, species);
         }
     }
 }

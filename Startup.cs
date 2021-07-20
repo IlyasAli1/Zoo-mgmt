@@ -1,11 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,7 +23,7 @@ namespace Zoo
         public static readonly ILoggerFactory
             LoggerFactory = Microsoft.Extensions.Logging.LoggerFactory.Create(builder => { builder.AddConsole(); });
 
-        private static string CORS_POLICY_NAME = "_myfaceCorsPolicy";
+        private static readonly string CORS_POLICY_NAME = "_myfaceCorsPolicy";
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ZooDbContext>(options =>
@@ -56,6 +50,7 @@ namespace Zoo
 
             services.AddControllers();
             services.AddTransient<IAnimalService, AnimalService>();
+            services.AddTransient<ISpeciesService, SpeciesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

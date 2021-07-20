@@ -1,5 +1,4 @@
-
-using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Zoo.Models.ApiModels;
 using Zoo.Models.DbModels;
@@ -8,8 +7,8 @@ namespace Zoo.Services
 {
     public interface IAnimalService
     {
-        AnimalApiModel GetAnimalById(int id);
-        void AddAnimalToDb(AnimalRequestModel animal);
+        AnimalResponseModel GetAnimalById(int id);
+        void AddAnimalToDb(AnimalRequestModel animal, SpeciesDbModel species);
     }
 
     public class AnimalService : IAnimalService
@@ -21,12 +20,16 @@ namespace Zoo.Services
             _context = context;
         }
 
-        public AnimalApiModel GetAnimalById(int id)
+        public AnimalResponseModel GetAnimalById(int id)
         {
-            return new AnimalApiModel(_context.Animal.Find(id));
+            return new AnimalResponseModel(
+                _context.Animal
+                .Include(animal => animal.Species)
+                .Single(animal => animal.Id == id)
+            );
         }
 
-        public void AddAnimalToDb(AnimalRequestModel animal)
+        public void AddAnimalToDb(AnimalRequestModel animal, SpeciesDbModel species)
         {
             _context.Animal.Add(new AnimalDbModel
             {
@@ -34,12 +37,11 @@ namespace Zoo.Services
                 Age = animal.Age,
                 DateOfBirth = animal.DateOfBirth,
                 DateOfArrival = animal.DateOfArrival,
-                Classification = animal.Classification,
                 Sex = animal.Sex,
-                Species = animal.Species
+                Species = species
             });
 
             _context.SaveChanges();
         }
-}
+    }
 }
