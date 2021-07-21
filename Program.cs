@@ -1,10 +1,8 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
 using System.Linq;
 using Zoo.Data;
-using Zoo.Services;
 
 namespace Zoo
 {
@@ -12,7 +10,7 @@ namespace Zoo
     {
         public static void Main(string[] args)
         {
-            IHost host = CreateHostBuilder(args).Build();
+            var host = CreateHostBuilder(args).Build();
 
             CreateDbIfNotExists(host);
 
@@ -20,10 +18,10 @@ namespace Zoo
         }
         private static void CreateDbIfNotExists(IHost host)
         {
-            using IServiceScope scope = host.Services.CreateScope();
-            IServiceProvider services = scope.ServiceProvider;
+            using var scope = host.Services.CreateScope();
+            var services = scope.ServiceProvider;
 
-            ZooDbContext context = services.GetRequiredService<ZooDbContext>();
+            var context = services.GetRequiredService<ZooDbContext>();
             context.Database.EnsureCreated();
 
             if (!context.Animal.Any())

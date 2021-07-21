@@ -21,23 +21,14 @@ namespace Zoo.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public AnimalResponseModel Get(int id)
-        {
-            return _animals.GetAnimalById(id);
-        }
+        public AnimalResponseModel Get(int id) => _animals.GetAnimalById(id);
 
         [HttpPost]
         [Route("create")]
-        public void Add([FromBody] AnimalRequestModel animal)
-        {
-            _animals.AddAnimalToDb(animal);
-        }
+        public void Add([FromBody] AnimalRequestModel animal) => _animals.AddAnimalToDb(animal);
 
         [HttpPost]
         [Route("search")]
-        public List<AnimalResponseModel> Search([FromQuery] SearchRequestModel search)
-        {
-            return _animals.Search(search);
-        }
+        public List<AnimalResponseModel> Search([FromQuery] SearchRequestModel search) => _animals.Search(search);
     }
 }

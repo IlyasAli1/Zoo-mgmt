@@ -33,10 +33,7 @@ namespace Zoo.Data
             new List<string> { "Jellyfish", "6" }
         };
 
-        public static IEnumerable<SpeciesDbModel> GetSpecies()
-        {
-            return Enumerable.Range(0, _data.Count()).Select(CreateRandomSpecies);
-        }
+        public static IEnumerable<SpeciesDbModel> GetSpecies() => Enumerable.Range(0, _data.Count()).Select(CreateRandomSpecies);
 
         private static SpeciesDbModel CreateRandomSpecies(int index)
         {
