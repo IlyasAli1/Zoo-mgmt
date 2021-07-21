@@ -86,7 +86,8 @@ namespace Zoo.Services
                 .Where(a => search.Type == "all" || a.Species.Type == search.Type)
                 .Where(a => search.Age == 0 || a.DateOfBirth > earliestBirthday && a.DateOfBirth <= mostRecentBirthday)
                 .Where(a => search.Name == null || a.Name == search.Name)
-                .Where(a => search.DateAcquired == default(DateTime) || a.DateOfArrival == search.DateAcquired);
+                .Where(a => search.DateAcquired == default(DateTime) || a.DateOfArrival == search.DateAcquired)
+                .Where(a => search.Enclosure == "all" || a.Enclosure.Name == search.Enclosure);
 
             return OrderResponse(unorderedResponse, search)
                 .Skip((search.Page - 1) * search.PageSize)
@@ -113,6 +114,9 @@ namespace Zoo.Services
                     break;
                 case (Models.Enums.OrderBy)4:
                     response = response.OrderBy(a => a.DateOfArrival);
+                    break;
+                case (Models.Enums.OrderBy)5:
+                    response = response.OrderBy(a => a.Enclosure.Name);
                     break;
                 default:
                     response = response.OrderBy(a => a.Species);

@@ -6,7 +6,8 @@ namespace Zoo.Models.Enums
         Classification,
         Age,
         Name,
-        DateAcquired
+        DateAcquired, 
+        Enclosure
     }
 
 }

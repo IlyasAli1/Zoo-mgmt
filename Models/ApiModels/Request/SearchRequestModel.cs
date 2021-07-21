@@ -13,5 +13,6 @@ namespace Zoo.Models.ApiModels
         public string Name { get; set; } = null;
         public DateTime DateAcquired { get; set; } = default(DateTime);
         public OrderBy OrderBy { get; set; } = 0;
+        public string Enclosure { get; set; } = "all";
     }
 }
