@@ -52,7 +52,6 @@ namespace Zoo.Services
         public SpeciesResponseModel GetSpeciesById(int id)
         {
             return new SpeciesResponseModel(GetDbModelSpeciesById(id));
-
         }
 
         public SpeciesDbModel GetDbModelSpeciesById(int id)
@@ -75,12 +74,15 @@ namespace Zoo.Services
 
         public List<AnimalResponseModel> Search(SearchRequestModel search)
         {
+            var mostRecentBirthday = DateTime.Today.AddYears(-search.Age);
+            var earliestBirthday = mostRecentBirthday.AddYears(-1);
+
             return _context.Animal
                 .Include(a => a.Species)
                 .OrderBy(a => a.Species.Type)
-                .Where(a => search.Classification == 0 || a.Species.Classification == search.Classification)
+                .Where(a => search.Classification == null || a.Species.Classification == search.Classification)
                 .Where(a => search.Type == "all" || a.Species.Type == search.Type)
-                .Where(a => search.Age == 0 || new DateTime(DateTime.Now.Subtract(a.DateOfBirth).Ticks).Year - 1 == search.Age)
+                .Where(a => search.Age == 0 || a.DateOfBirth > earliestBirthday && a.DateOfBirth <= mostRecentBirthday)
                 .Where(a => search.Name == null || a.Name == search.Name)
                 .Where(a => search.DateAcquired == default(DateTime) || a.DateOfArrival == search.DateAcquired)
                 .Skip((search.Page - 1) * search.PageSize)
