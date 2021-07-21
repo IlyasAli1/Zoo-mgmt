@@ -16,5 +16,7 @@ namespace Zoo.Models.ApiModels
         public Sex Sex { get; set; }
         [Required]
         public int SpeciesId { get; set; }
+        [Required]
+        public int EnclosureId { get; set; }
     }
 }

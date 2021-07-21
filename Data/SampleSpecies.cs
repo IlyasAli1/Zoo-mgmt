@@ -37,8 +37,6 @@ namespace Zoo.Data
 
         private static SpeciesDbModel CreateRandomSpecies(int index)
         {
-
-
             return new SpeciesDbModel
             {
                 Type = _data[index][0],

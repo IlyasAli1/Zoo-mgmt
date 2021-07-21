@@ -10,7 +10,7 @@ namespace Zoo.Services
     public interface IAnimalService
     {
         AnimalResponseModel GetAnimalById(int id);
-        void AddAnimalToDb(AnimalRequestModel animal);
+        AnimalResponseModel AddAnimalToDb(AnimalRequestModel animal, EnclosureDbModel enclosure);
         SpeciesResponseModel GetSpeciesById(int id);
         void AddSpeciesToDb(SpeciesRequestModel animal);
         SpeciesDbModel GetDbModelSpeciesById(int id);
@@ -32,22 +32,26 @@ namespace Zoo.Services
             return new AnimalResponseModel(
                 _context.Animal
                 .Include(animal => animal.Species)
+                .Include(animal => animal.Enclosure)
                 .Single(animal => animal.Id == id)
             );
         }
 
-        public void AddAnimalToDb(AnimalRequestModel animal)
+        public AnimalResponseModel AddAnimalToDb(AnimalRequestModel animal, EnclosureDbModel enclosure)
         {
-            _context.Animal.Add(new AnimalDbModel
+            var newAnimal = new AnimalDbModel
             {
                 Name = animal.Name,
                 DateOfBirth = animal.DateOfBirth,
                 DateOfArrival = animal.DateOfArrival,
                 Sex = animal.Sex,
-                Species = GetDbModelSpeciesById(animal.SpeciesId)
-            });
-
+                Species = GetDbModelSpeciesById(animal.SpeciesId),
+                Enclosure = enclosure
+            };
+            _context.Animal.Add(newAnimal);
             _context.SaveChanges();
+
+            return new AnimalResponseModel(newAnimal);
         }
 
         public SpeciesResponseModel GetSpeciesById(int id) => new SpeciesResponseModel(GetDbModelSpeciesById(id));
@@ -77,6 +81,7 @@ namespace Zoo.Services
 
             var unorderedResponse = _context.Animal
                 .Include(a => a.Species)
+                .Include(a => a.Enclosure)
                 .Where(a => search.Classification == null || a.Species.Classification == search.Classification)
                 .Where(a => search.Type == "all" || a.Species.Type == search.Type)
                 .Where(a => search.Age == 0 || a.DateOfBirth > earliestBirthday && a.DateOfBirth <= mostRecentBirthday)

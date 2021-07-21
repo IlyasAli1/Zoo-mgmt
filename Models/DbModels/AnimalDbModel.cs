@@ -11,5 +11,6 @@ namespace Zoo.Models.DbModels
         public DateTime DateOfArrival { get; set; }
         public Sex Sex { get; set; }
         public SpeciesDbModel Species { get; set; }
+        public EnclosureDbModel Enclosure { get; set; }
     }
 }

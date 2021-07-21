@@ -14,6 +14,8 @@ namespace Zoo.Models.ApiModels
         public Classification Classification { get; set; }
         public Sex Sex { get; set; }
         public string Species { get; set; }
+        public string Enclosure { get; set; }
+
 
         public AnimalResponseModel(AnimalDbModel animal)
         {
@@ -25,6 +27,7 @@ namespace Zoo.Models.ApiModels
             Classification = animal.Species.Classification;
             Sex = animal.Sex;
             Species = animal.Species.Type;
+            Enclosure = animal.Enclosure.Name;
         }
 
         public AnimalResponseModel()

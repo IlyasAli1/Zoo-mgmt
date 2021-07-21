@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
 using Zoo.Models.ApiModels;
 using Zoo.Services;
 
@@ -12,11 +14,13 @@ namespace Zoo.Controllers
     {
         private readonly ILogger<AnimalController> _logger;
         private readonly IAnimalService _animals;
+        private readonly IEnclosureService _enclosure;
 
-        public AnimalController(ILogger<AnimalController> logger, IAnimalService animals)
+        public AnimalController(ILogger<AnimalController> logger, IAnimalService animals, IEnclosureService enclosure)
         {
             _logger = logger;
             _animals = animals;
+            _enclosure = enclosure;
         }
 
         [HttpGet]
@@ -25,7 +29,16 @@ namespace Zoo.Controllers
 
         [HttpPost]
         [Route("create")]
-        public void Add([FromBody] AnimalRequestModel animal) => _animals.AddAnimalToDb(animal);
+        public IActionResult Add([FromBody] AnimalRequestModel animal) 
+        {
+            if (!_enclosure.CheckEnclosureHasCapacity(animal.EnclosureId))
+            {
+                return BadRequest("Animal enclosure is full");
+            }
+            var enclosure = _enclosure.GetEnclosureById(animal.EnclosureId);
+            var newAnimal = _animals.AddAnimalToDb(animal, enclosure);
+            return Created(Url.Action("Get", new { id = newAnimal.Id }), newAnimal);
+        } 
 
         [HttpPost]
         [Route("search")]
