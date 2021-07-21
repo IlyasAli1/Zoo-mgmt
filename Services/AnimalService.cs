@@ -15,7 +15,7 @@ namespace Zoo.Services
         void AddSpeciesToDb(SpeciesRequestModel animal);
         SpeciesDbModel GetDbModelSpeciesById(int id);
         List<AnimalResponseModel> Search(SearchRequestModel search);
-        List<AnimalResponseModel> OrderResponse(List<AnimalResponseModel> response, SearchRequestModel search);
+        IEnumerable<AnimalDbModel> OrderResponse(IEnumerable<AnimalDbModel> response, SearchRequestModel search);
     }
 
     public class AnimalService : IAnimalService
@@ -81,37 +81,36 @@ namespace Zoo.Services
                 .Where(a => search.Type == "all" || a.Species.Type == search.Type)
                 .Where(a => search.Age == 0 || a.DateOfBirth > earliestBirthday && a.DateOfBirth <= mostRecentBirthday)
                 .Where(a => search.Name == null || a.Name == search.Name)
-                .Where(a => search.DateAcquired == default(DateTime) || a.DateOfArrival == search.DateAcquired)
-                .Select(a => new AnimalResponseModel(a))
-                .ToList();
+                .Where(a => search.DateAcquired == default(DateTime) || a.DateOfArrival == search.DateAcquired);
 
             return OrderResponse(unorderedResponse, search)
                 .Skip((search.Page - 1) * search.PageSize)
                 .Take(search.PageSize)
+                .Select(a => new AnimalResponseModel(a))
                 .ToList();
         }
 
-        public List<AnimalResponseModel> OrderResponse(List<AnimalResponseModel> response, SearchRequestModel search)
+        public IEnumerable<AnimalDbModel> OrderResponse(IEnumerable<AnimalDbModel> response, SearchRequestModel search)
         {
             switch (search.OrderBy)
             {                
                 case (Models.Enums.OrderBy)0:
-                    response = response.OrderBy(a => a.Species).ToList();
+                    response = response.OrderBy(a => a.Species.Type);
                     break;
                 case (Models.Enums.OrderBy)1:
-                    response = response.OrderBy(a => a.Classification).ToList();
+                    response = response.OrderBy(a => a.Species.Classification);
                     break;
                 case (Models.Enums.OrderBy)2:
-                    response = response.OrderBy(a => a.Age).ToList();
+                    response = response.OrderBy(a => a.DateOfBirth);
                     break;
                 case (Models.Enums.OrderBy)3:
-                    response = response.OrderBy(a => a.Name).ToList();
+                    response = response.OrderBy(a => a.Name);
                     break;
                 case (Models.Enums.OrderBy)4:
-                    response = response.OrderBy(a => a.DateOfArrival).ToList();
+                    response = response.OrderBy(a => a.DateOfArrival);
                     break;
                 default:
-                    response = response.OrderBy(a => a.Species).ToList();
+                    response = response.OrderBy(a => a.Species);
                     break;
             }
             return response;
