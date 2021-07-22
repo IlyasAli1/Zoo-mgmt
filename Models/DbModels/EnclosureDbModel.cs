@@ -9,5 +9,6 @@ namespace Zoo.Models.DbModels
         public int Capacity { get; set; }
         public string Name { get; set; }
         public List<AnimalDbModel> Animals { get; set; }
+        public List<ZookeeperDbModel> Zookeepers { get; set; }
     } 
 }
