@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Zoo.Models.DbModels;
+using Zoo.Models.Enums;
 
 namespace Zoo.Services
 {
     public interface IEnclosureService
     {
-        EnclosureDbModel GetEnclosureById(int id);
-        bool CheckEnclosureHasCapacity(int id);
+        EnclosureDbModel GetEnclosureById(Enclosure id);
+        bool CheckEnclosureHasCapacity(Enclosure id);
     }
 
     public class EnclosureService : IEnclosureService
@@ -22,14 +23,14 @@ namespace Zoo.Services
             _context = context;
         }
 
-        public EnclosureDbModel GetEnclosureById(int id)
+        public EnclosureDbModel GetEnclosureById(Enclosure id)
         {
             return _context.Enclosure
                 .Include(enclosure => enclosure.Animals)
                 .Single(enclosure => enclosure.Id == id);
         }
 
-        public bool CheckEnclosureHasCapacity(int id)
+        public bool CheckEnclosureHasCapacity(Enclosure id)
         {
             var enclosure = GetEnclosureById(id);
 

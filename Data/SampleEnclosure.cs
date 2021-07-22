@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Zoo.Models.DbModels;
 using Zoo.Models.Enums;
 
@@ -24,6 +26,7 @@ namespace Zoo.Data
         {
             return new EnclosureDbModel
             {
+                Id = (Enclosure)Enum.Parse(typeof(Enclosure), Regex.Replace(_data[index][0], @"\s+", "")),
                 Name = _data[index][0],
                 Capacity = int.Parse(_data[index][1])
             };

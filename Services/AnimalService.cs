@@ -116,7 +116,7 @@ namespace Zoo.Services
                     response = response.OrderBy(a => a.DateOfArrival);
                     break;
                 case (Models.Enums.OrderBy)5:
-                    response = response.OrderBy(a => a.Enclosure.Name);
+                    response = response.OrderBy(a => a.Enclosure.Id).ThenBy(a => a.Name);
                     break;
                 default:
                     response = response.OrderBy(a => a.Species);
