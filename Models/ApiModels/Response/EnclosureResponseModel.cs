@@ -13,17 +13,17 @@ namespace Zoo.Models.ApiModels
         public List<AnimalResponseModel> Animals { get; set; }
         public List<ZookeeperResponseModel> Zookeepers { get; set; }
 
-        public EnclosureResponseModel(EnclosureDbModel enclosure)
+        public EnclosureResponseModel(EnclosureDbModel enclosure, bool loadDependencies = false)
         {
             Id = enclosure.Id;
             Capacity = enclosure.Capacity;
             Name = enclosure.Name;
-            Animals = enclosure.Animals.Select(a => new AnimalResponseModel(a)).ToList();
-            Zookeepers = enclosure.Zookeepers.Select(a => new ZookeeperResponseModel(a)).ToList();
-        }
 
-        public EnclosureResponseModel()
-        {
+            if (loadDependencies)
+            {
+                Animals = enclosure.Animals.Select(a => new AnimalResponseModel(a)).ToList();
+                Zookeepers = enclosure.Zookeepers.Select(z => new ZookeeperResponseModel(z)).ToList();
+            }
         }
     }
 }

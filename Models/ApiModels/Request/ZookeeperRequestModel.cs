@@ -11,10 +11,8 @@ namespace Zoo.Models.ApiModels
     public class ZookeeperRequestModel
     {
         [Required]
-        public string Name;
+        public string Name { get; set; }
         [Required]
-        public string EnclosureIds;
-        [Required]
-        public string AnimalIds;
+        public string EnclosureIds { get; set; }
     }
 }

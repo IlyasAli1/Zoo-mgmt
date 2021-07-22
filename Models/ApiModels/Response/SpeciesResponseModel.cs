@@ -5,19 +5,15 @@ namespace Zoo.Models.ApiModels
 {
     public class SpeciesResponseModel
     {
-        public string Type;
-        public Classification Classification;
-        public int Id;
+        public string Type { get; set; }
+        public Classification Classification { get; set; }
+        public int Id { get; set; }
 
         public SpeciesResponseModel(SpeciesDbModel species)
         {
             Type = species.Type;
             Classification = species.Classification;
             Id = species.Id;
-        }
-
-        public SpeciesResponseModel()
-        {
         }
     }
 }

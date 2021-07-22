@@ -8,21 +8,21 @@ namespace Zoo.Models.ApiModels
 {
     public class ZookeeperResponseModel
     {
-        public string Name;
-        public int Id;
-        public List<AnimalResponseModel> Animals;
-        public List<EnclosureResponseModel> Enclosures;
+        public string Name { get; set; }
+        public int Id { get; set; }
+        public List<AnimalResponseModel> Animals { get; set; }
+        public List<EnclosureResponseModel> Enclosures { get; set; }
 
-        public ZookeeperResponseModel(ZookeeperDbModel zookeeper)
+        public ZookeeperResponseModel(ZookeeperDbModel zookeeper, bool loadDependencies = false)
         {
             Name = zookeeper.Name;
             Id = zookeeper.Id;
-            Animals = zookeeper.Animals.Select(a => new AnimalResponseModel(a)).ToList();
-            Enclosures = zookeeper.Enclosures.Select(e => new EnclosureResponseModel(e)).ToList();
-        }
 
-        public ZookeeperResponseModel()
-        {
+            if (loadDependencies)
+            {
+                Animals = zookeeper.Animals.Select(a => new AnimalResponseModel(a)).ToList();
+                Enclosures = zookeeper.Enclosures.Select(e => new EnclosureResponseModel(e)).ToList();
+            }
         }
     }
 }

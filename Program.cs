@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
@@ -30,7 +31,9 @@ namespace Zoo
                 context.Animal.AddRange(animals);
                 context.SaveChanges();
 
-
+                var zookeepers = context.Zookeeper;
+                zookeepers.UpdateRange(SampleZookeepers.UpdateZookeepers(zookeepers.ToList(), animals.ToList()));
+                context.SaveChanges();
             }
         }
         public static IHostBuilder CreateHostBuilder(string[] args)

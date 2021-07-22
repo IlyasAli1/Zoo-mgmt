@@ -38,6 +38,7 @@ namespace Zoo.Controllers
             var enclosure = _enclosure.GetEnclosureById(animal.EnclosureId);
             var newAnimal = _animals.AddAnimalToDb(animal, enclosure);
             return Created(Url.Action("Get", new { id = newAnimal.Id }), newAnimal);
+           
         } 
 
         [HttpPost]

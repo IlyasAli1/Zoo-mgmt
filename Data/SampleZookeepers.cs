@@ -9,27 +9,36 @@ namespace Zoo.Data
 {
     public class SampleZookeepers
     {
-        public static int NumberOfEnclosure = 100;
-
         private static readonly IList<IList<string>> _data = new List<IList<string>>
         {
-            new List<string> { "Lion Enclosure", "10" },
-            new List<string> { "Aviary", "50" },
-            new List<string> { "Reptile House", "40" },
-            new List<string> { "Giraffe Enclosure", "6" },
-            new List<string> { "Hippo Enclosure", "10" }
+            new List<string> { "Oskar Williams" },
+            new List<string> { "Sasha B" },
+            new List<string> { "Sophia Lin" },
         };
 
-        public static IEnumerable<EnclosureDbModel> GetEnclosure() => Enumerable.Range(0, _data.Count()).Select(CreateRandomEnclosure);
+        public static IEnumerable<ZookeeperDbModel> GetInitialZookeepers() => Enumerable.Range(0, _data.Count()).Select(CreateRandomInitialZookeepers);
 
-        private static ZookeeperDbModel CreateRandomZookeepers(int index)
+        private static ZookeeperDbModel CreateRandomInitialZookeepers(int index)
         {
             return new ZookeeperDbModel
             {
                 Name = _data[index][0],
-                Animals = 
-                Enclosures
             };
+        }
+
+        public static List<ZookeeperDbModel> UpdateZookeepers(
+            List<ZookeeperDbModel> zookeepers, List<AnimalDbModel> animals
+        )
+        {
+            foreach (var zookeeper in zookeepers)
+            {
+                zookeeper.Enclosures = animals
+                    .Where(a => a.Zookeeper.Name == zookeeper.Name)
+                    .Select(a => a.Enclosure)
+                    .Distinct()
+                    .ToList();
+            }
+            return zookeepers;
         }
     }
 }
