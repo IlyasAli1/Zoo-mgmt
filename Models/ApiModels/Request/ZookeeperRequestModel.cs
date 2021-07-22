@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Zoo.Models.Enums;
+using Zoo.Models.DbModels;
 
 namespace Zoo.Models.ApiModels
 {
@@ -15,6 +16,5 @@ namespace Zoo.Models.ApiModels
         public string EnclosureIds;
         [Required]
         public string AnimalIds;
-
     }
 }

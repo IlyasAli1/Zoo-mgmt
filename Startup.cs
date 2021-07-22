@@ -51,6 +51,7 @@ namespace Zoo
             services.AddControllers();
             services.AddTransient<IAnimalService, AnimalService>();
             services.AddTransient<IEnclosureService, EnclosureService>();
+            services.AddTransient<IZookeeperService, ZookeeperService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

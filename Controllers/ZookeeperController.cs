@@ -1,9 +1,10 @@
-﻿using Microsoft.Extensions.Logging;
-using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Http;
+using System.Net;
+using System.Net.Http;
+using Zoo.Models.ApiModels;
+using Zoo.Services;
 
 namespace Zoo.Controllers
 {
@@ -25,6 +26,9 @@ namespace Zoo.Controllers
         [Route("{id}")]
         public ZookeeperResponseModel Get(int id) => _zookeeper.GetZookeeperById(id);
 
+        //GetZookeeperById
+        //AddZookeeper
+
         // [HttpPost]
         // [Route("create")]
        // public IActionResult Add([FromBody] ZookeeperRequestModel zookeeper)
@@ -33,7 +37,6 @@ namespace Zoo.Controllers
             //var newAnimal = _animals.AddAnimalToDb(animal, enclosure);
         //    return Created(Url.Action("Get", new { id = newAnimal.Id }), newAnimal);
        // }
-
     }
 
 }

@@ -21,7 +21,7 @@ namespace Zoo.Models.ApiModels
             Enclosures = zookeeper.Enclosures.Select(e => new EnclosureResponseModel(e)).ToList();
         }
 
-        public SpeciesResponseModel()
+        public ZookeeperResponseModel()
         {
         }
     }

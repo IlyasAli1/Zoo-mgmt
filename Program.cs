@@ -29,6 +29,8 @@ namespace Zoo
                 var animals = SampleAnimal.GetAnimals();
                 context.Animal.AddRange(animals);
                 context.SaveChanges();
+
+
             }
         }
         public static IHostBuilder CreateHostBuilder(string[] args)
