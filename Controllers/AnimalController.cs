@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -25,11 +26,21 @@ namespace Zoo.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public AnimalResponseModel Get(int id) => _animals.GetAnimalById(id);
+        public ObjectResult Get(int id)
+        {
+            try
+            {
+                return StatusCode(200, _animals.GetAnimalById(id));
+            }
+            catch (InvalidOperationException)
+            {
+                return StatusCode(404, "Id not recognized");
+            }
+        }
 
         [HttpPost]
         [Route("create")]
-        public IActionResult Add([FromBody] AnimalRequestModel animal) 
+        public IActionResult Add([FromBody] AnimalRequestModel animal)
         {
             if (!_enclosure.CheckEnclosureHasCapacity(animal.EnclosureId))
             {
@@ -38,8 +49,8 @@ namespace Zoo.Controllers
             var enclosure = _enclosure.GetEnclosureById(animal.EnclosureId);
             var newAnimal = _animals.AddAnimalToDb(animal, enclosure);
             return Created(Url.Action("Get", new { id = newAnimal.Id }), newAnimal);
-           
-        } 
+
+        }
 
         [HttpPost]
         [Route("search")]

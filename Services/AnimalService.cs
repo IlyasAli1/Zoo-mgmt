@@ -99,7 +99,7 @@ namespace Zoo.Services
         public IEnumerable<AnimalDbModel> OrderResponse(IEnumerable<AnimalDbModel> response, SearchRequestModel search)
         {
             switch (search.OrderBy)
-            {                
+            {
                 case (Models.Enums.OrderBy)0:
                     response = response.OrderBy(a => a.Species.Type);
                     break;

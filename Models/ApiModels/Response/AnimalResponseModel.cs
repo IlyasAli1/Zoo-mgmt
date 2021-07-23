@@ -29,5 +29,9 @@ namespace Zoo.Models.ApiModels
             Species = animal.Species.Type;
             Enclosure = animal.Enclosure.Name;
         }
+
+        public AnimalResponseModel()
+        {
+        }
     }
 }

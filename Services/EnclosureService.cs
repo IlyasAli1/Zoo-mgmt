@@ -12,6 +12,7 @@ namespace Zoo.Services
     {
         EnclosureDbModel GetEnclosureById(Enclosure id);
         bool CheckEnclosureHasCapacity(Enclosure id);
+        List<EnclosureDbModel> GetEnclosuresByIds(string enclosure);
     }
 
     public class EnclosureService : IEnclosureService
@@ -35,6 +36,16 @@ namespace Zoo.Services
             var enclosure = GetEnclosureById(id);
 
             return enclosure.Capacity > enclosure.Animals.Count();
+        }
+
+        public List<EnclosureDbModel> GetEnclosuresByIds(string enclosure)
+        {
+            var enclosures = new List<EnclosureDbModel>();
+            foreach (var id in enclosure.Split(','))
+            {
+                enclosures.Add(GetEnclosureById((Enclosure)int.Parse(id)));
+            }
+            return enclosures;
         }
     }
 }

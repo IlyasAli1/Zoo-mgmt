@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -27,10 +28,17 @@ namespace Zoo.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public ZookeeperResponseModel Get(int id)
+        public ObjectResult Get(int id)
         {
-            var zookeeper = _zookeeper.GetZookeeperById(id);
-            return zookeeper;
+            try
+            {
+                return StatusCode(200, _zookeeper.GetZookeeperById(id));
+            }
+            catch (InvalidOperationException)
+            {
+                return StatusCode(404, "Id is not valid.");
+            }
+
         }
 
         [HttpPost]
@@ -45,7 +53,9 @@ namespace Zoo.Controllers
                 }
             }
 
-            var newZookeeper = _zookeeper.AddZookeeperToDatabase(zookeeper, _enclosure);
+            var enclosures = _enclosure.GetEnclosuresByIds(zookeeper.EnclosureIds);
+
+            var newZookeeper = _zookeeper.AddZookeeperToDatabase(zookeeper, enclosures);
             return Created(Url.Action("Get", new { id = newZookeeper.Id }), newZookeeper);
         }
     }
