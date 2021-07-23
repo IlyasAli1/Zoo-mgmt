@@ -52,5 +52,12 @@ namespace Zoo.Controllers
         [HttpPost]
         [Route("search")]
         public List<AnimalResponseModel> Search([FromQuery] SearchRequestModel search) => _animals.Search(search);
+
+        [HttpPost]
+        [Route("transfer")]
+        public ActionResult<TransferResponseModel> Transfer([FromBody] TransferRequestModel transfer)
+        {
+            return _animals.AddNewTransfer(transfer);
+        }
     }
 }

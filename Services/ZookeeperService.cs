@@ -36,7 +36,8 @@ namespace Zoo.Services
 
         public ZookeeperResponseModel AddZookeeperToDatabase(ZookeeperRequestModel zookeeper)
         {
-            var enclosures = _context.Enclosure.Where(e => zookeeper.EnclosureIds.Contains(e.Id)).ToList();
+            var enclosures = _context.Enclosure
+                .Where(e => zookeeper.EnclosureIds.Contains(e.Id)).ToList();
 
             if (enclosures.Count != zookeeper.EnclosureIds.Count)
             {
@@ -45,13 +46,13 @@ namespace Zoo.Services
 
             var newZookeeper = new ZookeeperDbModel
             {
-                 Name = zookeeper.Name,
-                 Enclosures = enclosures
+                Name = zookeeper.Name,
+                Enclosures = enclosures
             };
             _context.Zookeeper.Add(newZookeeper);
             _context.SaveChanges();
 
-            return new ZookeeperResponseModel(newZookeeper);
+            return new ZookeeperResponseModel(newZookeeper, true); //need true, but only for enclosures not animals
         }
     }
 }

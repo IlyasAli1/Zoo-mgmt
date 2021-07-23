@@ -20,7 +20,7 @@ namespace Zoo.Models.ApiModels
 
             if (loadDependencies)
             {
-                Animals = zookeeper.Animals.Select(a => new AnimalResponseModel(a)).ToList();
+                Animals = zookeeper.Animals?.Select(a => new AnimalResponseModel(a)).ToList();
                 Enclosures = zookeeper.Enclosures.Select(e => new EnclosureResponseModel(e)).ToList();
             }
         }

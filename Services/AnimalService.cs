@@ -16,6 +16,7 @@ namespace Zoo.Services
         SpeciesDbModel GetDbModelSpeciesById(int id);
         List<AnimalResponseModel> Search(SearchRequestModel search);
         IEnumerable<AnimalDbModel> OrderResponse(IEnumerable<AnimalDbModel> response, SearchRequestModel search);
+        TransferResponseModel AddNewTransfer(TransferRequestModel transfer);
     }
 
     public class AnimalService : IAnimalService
@@ -131,6 +132,21 @@ namespace Zoo.Services
                     break;
             }
             return response;
+        }
+
+        public TransferResponseModel AddNewTransfer(TransferRequestModel transfer)
+        {
+            var transferDb = new TransferDbModel
+            {
+                DateOfTransfer = transfer.DateOfTransfer,
+                Inbound = transfer.Inbound,
+                Animal = _context.Animal.Single(animal => animal.Id == transfer.AnimalId),
+                Location = _context.Location.Single(l => l.Id == transfer.LocationId)
+            };
+            _context.Transfer.Add(transferDb);
+            _context.SaveChanges();
+
+            return new TransferResponseModel(transferDb);
         }
     }
 }
