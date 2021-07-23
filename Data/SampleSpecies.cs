@@ -7,8 +7,6 @@ namespace Zoo.Data
 {
     public class SampleSpecies
     {
-        public static int NumberOfSpecies = 100;
-
         private static readonly IList<IList<string>> _data = new List<IList<string>>
         {
             new List<string> { "Lion", "1" },

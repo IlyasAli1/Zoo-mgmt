@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Zoo.Models.Enums;
 
 namespace Zoo.Models.DbModels
@@ -13,5 +14,6 @@ namespace Zoo.Models.DbModels
         public SpeciesDbModel Species { get; set; }
         public EnclosureDbModel Enclosure { get; set; }
         public ZookeeperDbModel Zookeeper { get; set; }
+        public List<TransferDbModel> Transfers { get; set; }
     }
 }

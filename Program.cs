@@ -27,12 +27,16 @@ namespace Zoo
 
             if (!context.Animal.Any())
             {
-                var animals = SampleAnimal.GetAnimals();
+                var animals = SampleAnimal.GetAnimals().ToList();
                 context.Animal.AddRange(animals);
                 context.SaveChanges();
 
                 var zookeepers = context.Zookeeper;
-                zookeepers.UpdateRange(SampleZookeepers.UpdateZookeepers(zookeepers.ToList(), animals.ToList()));
+                SampleZookeepers.UpdateZookeepers(zookeepers.ToList(), animals);
+                context.SaveChanges();
+
+                var transfers = SampleTransfer.GetTransfers(animals);
+                context.Transfer.AddRange(transfers);
                 context.SaveChanges();
             }
         }

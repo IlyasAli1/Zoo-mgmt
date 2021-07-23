@@ -13,6 +13,6 @@ namespace Zoo.Models.ApiModels
         [Required]
         public string Name { get; set; }
         [Required]
-        public string EnclosureIds { get; set; }
+        public List<int> EnclosureIds { get; set; }
     }
 }

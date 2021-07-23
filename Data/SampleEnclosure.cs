@@ -9,8 +9,6 @@ namespace Zoo.Data
 {
     public class SampleEnclosure
     {
-        public static int NumberOfEnclosure = 100;
-
         private static readonly IList<IList<string>> _data = new List<IList<string>>
         {
             new List<string> { "Lion Enclosure", "10" },

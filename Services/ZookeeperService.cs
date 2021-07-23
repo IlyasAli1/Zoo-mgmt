@@ -12,7 +12,7 @@ namespace Zoo.Services
     public interface IZookeeperService
     {
         ZookeeperResponseModel GetZookeeperById(int id);
-        ZookeeperResponseModel AddZookeeperToDatabase(ZookeeperRequestModel zookeeper, List<EnclosureDbModel> enclosure);
+        ZookeeperResponseModel AddZookeeperToDatabase(ZookeeperRequestModel zookeeper);
     }
 
     public class ZookeeperService : IZookeeperService
@@ -36,8 +36,15 @@ namespace Zoo.Services
             return new ZookeeperResponseModel(zookeeperDbModel, true);
         }
 
-        public ZookeeperResponseModel AddZookeeperToDatabase(ZookeeperRequestModel zookeeper, List<EnclosureDbModel> enclosures)
+        public ZookeeperResponseModel AddZookeeperToDatabase(ZookeeperRequestModel zookeeper)
         {
+            var enclosures = _context.Enclosure.Where(e => zookeeper.EnclosureIds.Contains((int)e.Id)).ToList();
+
+            if (enclosures.Count != zookeeper.EnclosureIds.Count)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
             var newZookeeper = new ZookeeperDbModel
             {
                  Name = zookeeper.Name,

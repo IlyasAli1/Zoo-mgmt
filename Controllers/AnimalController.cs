@@ -13,28 +13,26 @@ namespace Zoo.Controllers
     [Route("[controller]")]
     public class AnimalController : ControllerBase
     {
-        private readonly ILogger<AnimalController> _logger;
         private readonly IAnimalService _animals;
         private readonly IEnclosureService _enclosure;
 
-        public AnimalController(ILogger<AnimalController> logger, IAnimalService animals, IEnclosureService enclosure)
+        public AnimalController(IAnimalService animals, IEnclosureService enclosure)
         {
-            _logger = logger;
             _animals = animals;
             _enclosure = enclosure;
         }
 
         [HttpGet]
         [Route("{id}")]
-        public ObjectResult Get(int id)
+        public ActionResult<AnimalResponseModel> Get(int id)
         {
             try
             {
-                return StatusCode(200, _animals.GetAnimalById(id));
+                return _animals.GetAnimalById(id);
             }
             catch (InvalidOperationException)
             {
-                return StatusCode(404, "Id not recognized");
+                return NotFound();
             }
         }
 
@@ -46,8 +44,7 @@ namespace Zoo.Controllers
             {
                 return BadRequest("Animal enclosure is full");
             }
-            var enclosure = _enclosure.GetEnclosureById(animal.EnclosureId);
-            var newAnimal = _animals.AddAnimalToDb(animal, enclosure);
+            var newAnimal = _animals.AddAnimalToDb(animal);
             return Created(Url.Action("Get", new { id = newAnimal.Id }), newAnimal);
 
         }

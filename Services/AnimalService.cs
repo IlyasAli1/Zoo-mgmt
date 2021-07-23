@@ -10,7 +10,7 @@ namespace Zoo.Services
     public interface IAnimalService
     {
         AnimalResponseModel GetAnimalById(int id);
-        AnimalResponseModel AddAnimalToDb(AnimalRequestModel animal, EnclosureDbModel enclosure);
+        AnimalResponseModel AddAnimalToDb(AnimalRequestModel animal);
         SpeciesResponseModel GetSpeciesById(int id);
         void AddSpeciesToDb(SpeciesRequestModel animal);
         SpeciesDbModel GetDbModelSpeciesById(int id);
@@ -31,16 +31,21 @@ namespace Zoo.Services
         {
             return new AnimalResponseModel(
                 _context.Animal
-                .Include(animal => animal.Species)
-                .Include(animal => animal.Enclosure)
-                .Include(animal => animal.Zookeeper)
-                .Single(animal => animal.Id == id)
+                    .Include(animal => animal.Species)
+                    .Include(animal => animal.Enclosure)
+                    .Include(animal => animal.Zookeeper)
+                    .Include(animal => animal.Transfers)
+                    .ThenInclude(t => t.Location)
+                    .Single(animal => animal.Id == id)
                 , true
             );
         }
 
-        public AnimalResponseModel AddAnimalToDb(AnimalRequestModel animal, EnclosureDbModel enclosure)
+        public AnimalResponseModel AddAnimalToDb(AnimalRequestModel animal)
         {
+            var enclosure = _context.Enclosure
+                .Single(enclosure => enclosure.Id == animal.EnclosureId);
+
             var newAnimal = new AnimalDbModel
             {
                 Name = animal.Name,

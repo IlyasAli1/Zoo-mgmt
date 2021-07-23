@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Zoo.Models.DbModels;
 using Zoo.Models.Enums;
 
@@ -16,6 +18,7 @@ namespace Zoo.Models.ApiModels
         public string Species { get; set; }
         public EnclosureResponseModel Enclosure { get; set; }
         public ZookeeperResponseModel Zookeeper { get; set; }
+        public List<TransferResponseModel> Transfers { get; set; }
 
 
         public AnimalResponseModel(AnimalDbModel animal, bool loadDependencies = false)
@@ -32,11 +35,8 @@ namespace Zoo.Models.ApiModels
             {
                 Enclosure = new EnclosureResponseModel(animal.Enclosure);
                 Zookeeper = new ZookeeperResponseModel(animal.Zookeeper);
+                Transfers = animal.Transfers?.Select(t => new TransferResponseModel(t)).ToList();
             }
-        }
-
-        public AnimalResponseModel()
-        {
         }
     }
 }
