@@ -14,10 +14,11 @@ namespace Zoo.Models.ApiModels
         public Classification Classification { get; set; }
         public Sex Sex { get; set; }
         public string Species { get; set; }
-        public string Enclosure { get; set; }
+        public EnclosureResponseModel Enclosure { get; set; }
+        public ZookeeperResponseModel Zookeeper { get; set; }
 
 
-        public AnimalResponseModel(AnimalDbModel animal)
+        public AnimalResponseModel(AnimalDbModel animal, bool loadDependencies = false)
         {
             Id = animal.Id;
             Name = animal.Name;
@@ -27,7 +28,11 @@ namespace Zoo.Models.ApiModels
             Classification = animal.Species.Classification;
             Sex = animal.Sex;
             Species = animal.Species.Type;
-            Enclosure = animal.Enclosure.Name;
+            if (loadDependencies)
+            {
+                Enclosure = new EnclosureResponseModel(animal.Enclosure);
+                Zookeeper = new ZookeeperResponseModel(animal.Zookeeper);
+            }
         }
 
         public AnimalResponseModel()

@@ -33,7 +33,9 @@ namespace Zoo.Services
                 _context.Animal
                 .Include(animal => animal.Species)
                 .Include(animal => animal.Enclosure)
+                .Include(animal => animal.Zookeeper)
                 .Single(animal => animal.Id == id)
+                , true
             );
         }
 
