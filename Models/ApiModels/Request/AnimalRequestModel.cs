@@ -17,6 +17,6 @@ namespace Zoo.Models.ApiModels
         [Required]
         public int SpeciesId { get; set; }
         [Required]
-        public Enclosure EnclosureId { get; set; }
+        public int EnclosureId { get; set; }
     }
 }

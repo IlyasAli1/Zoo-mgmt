@@ -7,7 +7,8 @@ namespace Zoo.Models.ApiModels
 {
     public class EnclosureResponseModel
     {
-        public Enclosure Id { get; set; }
+        public int Id { get; set; }
+        public Enclosure Type { get; set; }
         public int Capacity { get; set; }
         public string Name { get; set; }
         public List<AnimalResponseModel> Animals { get; set; }
@@ -18,6 +19,7 @@ namespace Zoo.Models.ApiModels
             Id = enclosure.Id;
             Capacity = enclosure.Capacity;
             Name = enclosure.Name;
+            Type = enclosure.Type;
 
             if (loadDependencies)
             {

@@ -24,7 +24,7 @@ namespace Zoo.Data
         {
             return new EnclosureDbModel
             {
-                Id = (Enclosure)Enum.Parse(typeof(Enclosure), Regex.Replace(_data[index][0], @"\s+", "")),
+                Type = (Enclosure)Enum.Parse(typeof(Enclosure), Regex.Replace(_data[index][0], @"\s+", "")),
                 Name = _data[index][0],
                 Capacity = int.Parse(_data[index][1])
             };

@@ -18,12 +18,10 @@ namespace Zoo.Services
     public class ZookeeperService : IZookeeperService
     {
         private readonly ZooDbContext _context;
-        // private readonly EnclosureService _service;
 
         public ZookeeperService(ZooDbContext context)
         {
             _context = context;
-            // _service = service;
         }
 
         public ZookeeperResponseModel GetZookeeperById(int id)
@@ -38,7 +36,7 @@ namespace Zoo.Services
 
         public ZookeeperResponseModel AddZookeeperToDatabase(ZookeeperRequestModel zookeeper)
         {
-            var enclosures = _context.Enclosure.Where(e => zookeeper.EnclosureIds.Contains((int)e.Id)).ToList();
+            var enclosures = _context.Enclosure.Where(e => zookeeper.EnclosureIds.Contains(e.Id)).ToList();
 
             if (enclosures.Count != zookeeper.EnclosureIds.Count)
             {

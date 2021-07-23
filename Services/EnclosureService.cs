@@ -6,7 +6,7 @@ namespace Zoo.Services
 {
     public interface IEnclosureService
     {
-        bool CheckEnclosureHasCapacity(Enclosure id);
+        bool CheckEnclosureHasCapacity(int id);
     }
 
     public class EnclosureService : IEnclosureService
@@ -18,7 +18,7 @@ namespace Zoo.Services
             _context = context;
         }
 
-        public bool CheckEnclosureHasCapacity(Enclosure id)
+        public bool CheckEnclosureHasCapacity(int id)
         {
             var enclosure = _context.Enclosure
                 .Include(enclosure => enclosure.Animals)

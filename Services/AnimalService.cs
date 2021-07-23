@@ -89,6 +89,7 @@ namespace Zoo.Services
             var unorderedResponse = _context.Animal
                 .Include(a => a.Species)
                 .Include(a => a.Enclosure)
+                .Include(a => a.Zookeeper)
                 .Where(a => search.Classification == null || a.Species.Classification == search.Classification)
                 .Where(a => search.Type == "all" || a.Species.Type == search.Type)
                 .Where(a => search.Age == 0 || a.DateOfBirth > earliestBirthday && a.DateOfBirth <= mostRecentBirthday)
@@ -99,7 +100,7 @@ namespace Zoo.Services
             return OrderResponse(unorderedResponse, search)
                 .Skip((search.Page - 1) * search.PageSize)
                 .Take(search.PageSize)
-                .Select(a => new AnimalResponseModel(a))
+                .Select(a => new AnimalResponseModel(a, true))
                 .ToList();
         }
 
@@ -123,7 +124,7 @@ namespace Zoo.Services
                     response = response.OrderBy(a => a.DateOfArrival);
                     break;
                 case (Models.Enums.OrderBy)5:
-                    response = response.OrderBy(a => a.Enclosure.Id).ThenBy(a => a.Name);
+                    response = response.OrderBy(a => a.Enclosure.Type).ThenBy(a => a.Enclosure.Id).ThenBy(a => a.Name);
                     break;
                 default:
                     response = response.OrderBy(a => a.Species);
