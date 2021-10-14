@@ -1,0 +1,11 @@
+version: "3.8"
+services:
+
+  sql-server-db:
+    container_name: zoo-mgmt
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "Password123"
+      ACCEPT_EULA: "Y"

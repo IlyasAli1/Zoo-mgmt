@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,24 +24,11 @@ namespace Zoo
         public static readonly ILoggerFactory
             LoggerFactory = Microsoft.Extensions.Logging.LoggerFactory.Create(builder => { builder.AddConsole(); });
 
-        private static readonly string CORS_POLICY_NAME = "_myfaceCorsPolicy";
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ZooDbContext>(options =>
             {
-                options.UseLoggerFactory(LoggerFactory);
-                options.UseSqlite("Data Source=zoo.db");
-            });
-
-            services.AddCors(options =>
-            {
-                options.AddPolicy(CORS_POLICY_NAME, builder =>
-                {
-                    builder
-                        .WithOrigins("http://localhost:3000")
-                        .AllowAnyMethod()
-                        .AllowAnyHeader();
-                });
+                options.UseSqlServer(@"Server=localhost,1433;Database=zoo-mgmt;User Id=sa;Password=Password123;");
             });
 
             services.AddSwaggerGen(c =>
