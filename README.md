@@ -29,3 +29,5 @@ Using SQL Server Authentication.
 
 - Login: `SA`
 - Password: `Password123`
+
+There will already be data present as the code in this runs SQL queries to check if the database "zoo-mgmt" exists and if the tables are empty. The code fills the tables with sample data if they are empty.
