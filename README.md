@@ -22,3 +22,10 @@ Now run:
 - `dotnet ef database update`
 
 You can now open the solution file (.sln) and run the program.
+
+## Using MSSQL Management Studio
+
+Using SQL Server Authentication.
+
+- Login: `SA`
+- Password: `Password123`
