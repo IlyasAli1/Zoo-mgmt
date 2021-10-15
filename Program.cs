@@ -1,9 +1,12 @@
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 using System.Linq;
 using Zoo.Data;
+using Zoo.Helper;
 
 namespace Zoo
 {
@@ -23,9 +26,9 @@ namespace Zoo
             var services = scope.ServiceProvider;
 
             var context = services.GetRequiredService<ZooDbContext>();
-            context.Database.EnsureCreated();
 
-            if (!context.Animal.Any())
+            var exists = DatabaseHelper.CheckDatabaseExistsAndSeeded("Server=localhost,1433;Database=zoo-mgmt;User Id=sa;Password=Password123;", "zoo-mgmt");
+            if (!exists)
             {
                 var animals = SampleAnimal.GetAnimals().ToList();
                 context.Animal.AddRange(animals);
@@ -39,6 +42,7 @@ namespace Zoo
                 context.Transfer.AddRange(transfers);
                 context.SaveChanges();
             }
+
         }
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
