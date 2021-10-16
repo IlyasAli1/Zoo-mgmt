@@ -44,8 +44,8 @@ namespace Zoo.Services
 
         public AnimalResponseModel AddAnimalToDb(AnimalRequestModel animal)
         {
-            var enclosure = _context.Enclosure
-                .Single(enclosure => enclosure.Id == animal.EnclosureId);
+            var enclosure = _context.Enclosure.FromSqlInterpolated(@$"SELECT [e].[Id], [e].[Type], [e].[Capacity], [e].[Name] FROM [Enclosure] AS [e] WHERE [e].[Id] = {animal.EnclosureId}")
+                .Single();
 
             var newAnimal = new AnimalDbModel
             {
@@ -76,7 +76,6 @@ namespace Zoo.Services
             {
                 Type = species.Type,
                 Classification = species.Classification
-
             });
 
             _context.SaveChanges();
