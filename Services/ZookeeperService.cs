@@ -26,11 +26,12 @@ namespace Zoo.Services
 
         public ZookeeperResponseModel GetZookeeperById(int id)
         {
-            var zookeeperDbModel = _context.Zookeeper
-                .Include(z => z.Enclosures)
-                .Include(z => z.Animals)
-                .ThenInclude(a => a.Species)
-                .Single(z => z.Id == id);
+            var zookeeperDbModel = _context.Zookeeper.FromSqlRaw($@"Exec GetZookeepers").Single(z => z.Id == id);
+
+            //var query = zookeeperQuery.ToQueryString();
+
+            //var zookeeperDbModel = zookeeperQuery.Single(z => z.Id == id);
+
             return new ZookeeperResponseModel(zookeeperDbModel, true);
         }
 
